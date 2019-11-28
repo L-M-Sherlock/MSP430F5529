@@ -12,7 +12,8 @@ void dac7571_write_char(uint8 _char) {
     //    _char <<= 1;
     //}
 
-    gpio_write_char(_char, GPIO_PORT_PIN(3, 2), GPIO_PORT_PIN(3, 1));
+    gpio clk = GPIO_PORT_PIN(3, 2), dat = GPIO_PORT_PIN(3, 1);
+    gpio_write_char(_char, &clk, &dat);
 }
 
 void dac7571_write_data(const uint16 _data) {

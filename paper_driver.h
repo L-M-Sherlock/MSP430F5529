@@ -11,8 +11,9 @@ void paper_write_char(uint8 _char) {
     //    GPIO_OUT_HIGH(2, 7);
     //    _char <<= 1;
     //}
-    
-    gpio_write_char(_char, GPIO_PORT_PIN(2, 7), GPIO_PORT_PIN(3, 3));
+
+    gpio clk = GPIO_PORT_PIN(2, 7), dat = GPIO_PORT_PIN(3, 3);
+    gpio_write_char(_char, &clk, &dat);
 }
 
 void paper_write_address(const uint8 _address) {

@@ -14,20 +14,20 @@ typedef unsigned char uint8;
 typedef unsigned uint16;
 typedef unsigned long uint32;
 
-struct gpio {
+typedef struct gpio {
     volatile uint8* port;
     uint16 pin;
-};
+} gpio;
 
 #define GPIO_PORT_PIN(port, pin) {&P##port##OUT, BIT##pin}
 
 // not tested yet
-void gpio_write_char(uint8 _char, struct gpio _clk, struct gpio _dat) {
+void gpio_write_char(uint8 _char, const gpio* _clk, const gpio* _dat) {
     uint8 i = 8;
     for(i = 8; i; --i) {
-        *_clk.port &= ~_clk.pin;
-        _char & 0x80 ? (*_dat.port |= _dat.pin) : (*_dat.port &= ~_dat.pin);
-        *_clk.port |= _clk.pin;
+        *_clk->port &= ~_clk->pin;
+        _char & 0x80 ? (*_dat->port |= _dat->pin) : (*_dat->port &= ~_dat->pin);
+        *_clk->port |= _clk->pin;
         _char <<= 1;
     }
 }

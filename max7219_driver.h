@@ -12,7 +12,8 @@ void max7219_write_char(uint8 _char) {
     //    _char <<= 1;
     //}
 
-    gpio_write_char(_char, GPIO_PORT_PIN(6, 3), GPIO_PORT_PIN(6, 1));
+    gpio clk = GPIO_PORT_PIN(6, 3), dat = GPIO_PORT_PIN(6, 1);
+    gpio_write_char(_char, &clk, &dat);
 }
 
 void max7219_write(const uint8 _address, const uint8 _data) {
