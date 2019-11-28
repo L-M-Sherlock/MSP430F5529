@@ -4,14 +4,15 @@
 #include "utils.h"
 
 void max7219_write_char(uint8 _char) {
-    uint8 i = 8;
-    for(i = 8; i > 0; --i) {
-        GPIO_OUT_LOW(6, 3);
-        _char & 0x80 ? (GPIO_OUT_HIGH(6, 1)) : (GPIO_OUT_LOW(6, 1));
-        GPIO_OUT_HIGH(6, 3);
-        _char <<= 1;
-    }
+    //uint8 i = 8;
+    //for(i = 8; i > 0; --i) {
+    //    GPIO_OUT_LOW(6, 3);
+    //    _char & 0x80 ? (GPIO_OUT_HIGH(6, 1)) : (GPIO_OUT_LOW(6, 1));
+    //    GPIO_OUT_HIGH(6, 3);
+    //    _char <<= 1;
+    //}
 
+    gpio_write_char(_char, GPIO_PORT_PIN(6, 3), GPIO_PORT_PIN(6, 1));
 }
 
 void max7219_write(const uint8 _address, const uint8 _data) {
