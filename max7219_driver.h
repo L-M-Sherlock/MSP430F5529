@@ -3,10 +3,7 @@
 
 #include "utils.h"
 
-void max7219_write_char(uint8 _char) {
-    gpio clk = GPIO_OUT(6, 3), dat = GPIO_OUT(6, 1);
-    gpio_write_char(_char, &clk, &dat);
-}
+DECLEAR_GPIO_WRITE_CHAR(max7219, 6, 3, 6, 1)
 
 void max7219_write(const uint8 _address, const uint8 _data) {
     GPIO_OUT_LOW(6, 2);

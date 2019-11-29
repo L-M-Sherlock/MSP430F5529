@@ -4,10 +4,7 @@
 #include "utils.h"
 #include <stdarg.h>
 
-void paper_write_char(const uint8 _char) {
-    gpio clk = GPIO_OUT(2, 7), dat = GPIO_OUT(3, 3);
-    gpio_write_char(_char, &clk, &dat);
-}
+DECLEAR_GPIO_WRITE_CHAR(paper, 2, 7, 3, 3)
 
 void paper_write_address(const uint8 _address) {
     GPIO_OUT_LOW(3, 2);
@@ -28,7 +25,7 @@ void paper_write(const uint8 _address, const uint8 _dat_num, ...) {
     va_list valist;
     va_start(valist, _dat_num);
     uint8 i = _dat_num;
-    for(i = _dat_num; i; --i)
+    for(; i; --i)
         paper_write_data(va_arg(valist, uint8));
     va_end(valist);
 }
@@ -90,7 +87,7 @@ void paper_display_img(const uint8 _buffer[4000]) {
     paper_write_address(0x24);
     const uint16 size = 250 * 16;
     uint16 cnt = size;
-    for(cnt = size; cnt; --cnt)
+    for(; cnt; --cnt)
         paper_write_data(_buffer[size - cnt]);
     paper_write_uint8(0x22, 0xc7);
     paper_write_address(0x20);
