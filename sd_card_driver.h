@@ -121,6 +121,11 @@ void SDCard_init(void)
 	sd_reset();
 }
 
-
+void TimeInit()
+{
+    TA0CTL |= MC_1 + TASSEL_1 + TACLR;      //时钟为SMCLK,比较模式，开始时清零计数器
+    TA0CCTL0 = CCIE;                        //比较器中断使能
+    TA0CCR0  =10000;//32768;                        //比较值设为50000，相当于50ms的时间间隔
+}
 
 #endif
