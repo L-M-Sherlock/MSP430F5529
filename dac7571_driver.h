@@ -3,16 +3,8 @@
 
 #include "utils.h"
 
-void dac7571_write_char(uint8 _char) {
-    //uint8 i = 8;
-    //for(i = 8; i > 0; --i) {
-    //    GPIO_OUT_LOW(3, 2);
-    //    _char & 0x80 ? (GPIO_OUT_HIGH(3, 1)) : (GPIO_OUT_LOW(3, 1));
-    //    GPIO_OUT_HIGH(3, 2);
-    //    _char <<= 1;
-    //}
-
-    gpio clk = GPIO_PORT_PIN(3, 2), dat = GPIO_PORT_PIN(3, 1);
+void dac7571_write_char(const uint8 _char) {
+    gpio clk = GPIO_OUT(3, 1), dat = GPIO_OUT(3, 0);
     gpio_write_char(_char, &clk, &dat);
 }
 

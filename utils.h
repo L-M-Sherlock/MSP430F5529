@@ -19,9 +19,8 @@ typedef struct gpio {
     uint16 pin;
 } gpio;
 
-#define GPIO_PORT_PIN(port, pin) {&P##port##OUT, BIT##pin}
+#define GPIO_OUT(port, pin) {&P##port##OUT, BIT##pin}
 
-// not tested yet
 void gpio_write_char(uint8 _char, const gpio* _clk, const gpio* _dat) {
     uint8 i = 8;
     for(i = 8; i; --i) {
@@ -37,6 +36,7 @@ void delay_for(uint32 _delay) {
         __no_operation();
 }
 
+/** @note 不初始化时钟，默认配置下适用。 */
 void delay_ms(uint32 _ms) {
     while(_ms--)
         __delay_cycles(1000);
