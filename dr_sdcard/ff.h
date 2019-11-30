@@ -204,11 +204,29 @@ typedef enum {
 FRESULT f_mount (BYTE, FATFS*);						/* Mount/Unmount a logical drive */
 FRESULT f_open (FIL*, const TCHAR*, BYTE);			/* Open or create a file */
 FRESULT f_read (FIL*, void*, UINT, UINT*);			/* Read data from a file */
+FRESULT f_lseek (FIL*, DWORD);						/* Move file pointer of a file object */
 FRESULT f_close (FIL*);								/* Close an open file object */
 FRESULT f_opendir (DIRS*, const TCHAR*);				/* Open an existing directory */
 FRESULT f_readdir (DIRS*, FILINFO*);					/* Read a directory item */
+FRESULT f_stat (const TCHAR*, FILINFO*);			/* Get file status */
 FRESULT f_write (FIL*, const void*, UINT, UINT*);	/* Write data to a file */
+FRESULT f_getfree (const TCHAR*, DWORD*, FATFS**);	/* Get number of free clusters on the drive */
+FRESULT f_truncate (FIL*);							/* Truncate file */
 FRESULT f_sync (FIL*);								/* Flush cached data of a writing file */
+FRESULT f_unlink (const TCHAR*);					/* Delete an existing file or directory */
+FRESULT	f_mkdir (const TCHAR*);						/* Create a new directory */
+FRESULT f_chmod (const TCHAR*, BYTE, BYTE);			/* Change attriburte of the file/dir */
+FRESULT f_utime (const TCHAR*, const FILINFO*);		/* Change timestamp of the file/dir */
+FRESULT f_rename (const TCHAR*, const TCHAR*);		/* Rename/Move a file or directory */
+FRESULT f_forward (FIL*, UINT(*)(const BYTE*,UINT), UINT, UINT*);	/* Forward data to the stream */
+FRESULT f_mkfs (BYTE, BYTE, UINT);					/* Create a file system on the drive */
+FRESULT f_chdrive (BYTE);							/* Change current drive */
+FRESULT f_chdir (const TCHAR*);						/* Change current directory */
+FRESULT f_getcwd (TCHAR*, UINT);					/* Get current directory */
+int f_putc (TCHAR, FIL*);							/* Put a character to the file */
+int f_puts (const TCHAR*, FIL*);					/* Put a string to the file */
+int f_printf (FIL*, const TCHAR*, ...);				/* Put a formatted string to the file */
+TCHAR* f_gets (TCHAR*, int, FIL*);					/* Get a string from the file */
 
 #ifndef EOF
 #define EOF (-1)
