@@ -13,7 +13,7 @@ void max7219_write(const uint8 _address, const uint8 _data) {
     GPIO_OUT_HIGH(6, 2);
 }
 
-void max7219_init() {
+void max7219_io_init() {
     // P6.1 -> DIN
     GPIO_DIR_OUT(6, 1);
     GPIO_OUT_LOW(6, 1);
@@ -25,6 +25,10 @@ void max7219_init() {
     // P6.3 -> CLK
     GPIO_DIR_OUT(6, 3);
     GPIO_OUT_HIGH(6, 3); // rising edge is active
+}
+
+void max7219_init() {
+    max7219_io_init();
 
     max7219_write(0x09, 0x00); // bcd
     max7219_write(0x0a, 0x00); // intensity dimmest

@@ -22,7 +22,7 @@ void delay_ms(uint32 _ms) {
     }
 }
 
-void btn_init() {
+void btn_io_init() {
     P1DIR &= ~(BIT2 | BIT3);
     P1DIR |= BIT2 | BIT3;
     P1OUT |= BIT2 | BIT3;
