@@ -1,40 +1,29 @@
 #include "sdcard_driver.h"
 #include "dac7571_driver.h"
+#include "state_machine.h"
 
 #define WAV_BUFF_LEN (2048)
 uint8 wav_buff[WAV_BUFF_LEN];
 
-enum {
-    play,
-    pause,
-    stop,
-} state;
+enum State state;
 
 void play_wav(uint16 _chunk_size) {
     uint16 cnt = 0;
     for(; cnt < _chunk_size; ++cnt) {
         uint16 data = wav_buff[cnt];
-        dac7571_write_data(data << 3);
+
         while(state == pause);
-        __delay_cycles(2000);
+
+        dac7571_write_data(data << 3);
+        __delay_cycles(1800); // magic
     }
 }
 
-void btn_init() {
-    P1DIR &= ~(BIT2 | BIT3);
-    P1DIR |= BIT2 | BIT3;
-    P1OUT |= BIT2 | BIT3;
-    P1IE |= BIT2 | BIT3;
-    P1IES |= BIT2 | BIT3;
-}
-
-int main() {
-    state = stop;
-
+int main_wav_playback() {
     WDTCTL = WDTPW + WDTHOLD;
 
     __enable_interrupt();
-
+    state_init();
     btn_init();
     sdcard_init();
 
@@ -50,16 +39,4 @@ int main() {
 }
 
 #pragma vector = PORT1_VECTOR
-__interrupt void onBtnDown() {
-    if(P1IFG & BIT3) {
-        // S2 暂停
-        if(state == play)
-            state = pause;
-    }
-    else if(P1IFG & BIT2) {
-        // S1 播放
-        state = play;
-    }
-
-    P1IFG = 0;
-}
+DECLEAR_STATE_CALLBACK

@@ -76,6 +76,19 @@ void paper_init() {
     paper_write_uint8(0x3c, 0x73);
 }
 
+void paper_display_mono(const uint8 _color) {
+    paper_write_uint8(0x4e, 0x00);
+    paper_write_uint8(0x4f, 0xf9);
+    paper_write_address(0x24);
+    const uint16 size = 250 * 16;
+    uint16 cnt = size;
+    for(; cnt; --cnt)
+        paper_write_data(_color);
+    paper_write_uint8(0x22, 0xc7);
+    paper_write_address(0x20);
+    paper_wait_busy();
+}
+
 /**
  *  @brief 墨水屏显示图片。完全刷新时间约 3s，其中上一帧残留约 1.5s。
  *  @param _buffer 长度为 4000 的 8 位数组

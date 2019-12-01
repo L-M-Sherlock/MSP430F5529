@@ -2,6 +2,7 @@
 #define MAX7219_DRIVER_H_
 
 #include "utils.h"
+#include "state_machine.h"
 
 DECLEAR_GPIO_WRITE_CHAR(max7219, 6, 3, 6, 1)
 
@@ -38,7 +39,7 @@ void max7219_write_animation(const uint8 _frames[][8], const uint32 _delay[], co
     for(frame_idx = 0; frame_idx < _frame_count; ++frame_idx) {
         for(byte = 0; byte < 8; ++byte)
             max7219_write(byte + 1, _frames[frame_idx][byte]);
-        delay_for(_delay[frame_idx]);
+        delay_ms(_delay[frame_idx]);
     }
 }
 

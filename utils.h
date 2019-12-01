@@ -9,7 +9,6 @@ typedef unsigned long uint32;
 
 #define GPIO_DIR_OUT(port, pin) P##port##DIR |= BIT##pin
 #define GPIO_DIR_IN(port, pin) P##port##DIR &= ~BIT##pin
-#define GPIO_R_EN(port, pin) P##port##REN |= BIT##pin
 #define GPIO_OUT_HIGH(port, pin) P##port##OUT |= BIT##pin
 #define GPIO_OUT_LOW(port, pin) P##port##OUT &= ~BIT##pin
 #define GPIO_IN_HIGH(port, pin) (P##port##IN & BIT##pin)
@@ -26,13 +25,8 @@ void moudle_name##_write_char(uint8 _char) { \
     } \
 }
 
-void delay_for(uint32 _delay) {
-    while(_delay--)
-        __no_operation();
-}
-
 /** @note 不初始化时钟，默认配置下适用。 */
-void delay_ms(uint32 _ms) {
+void delay_ms_raw(uint32 _ms) {
     while(_ms--)
         __delay_cycles(1000);
 }
